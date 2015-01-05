@@ -1,3 +1,20 @@
 <h2 id="title">Welcome to Ember.js</h2>
 
+{{select-2 content=model selected=controller.selected}}
+
+<div class="row">
+	<div class="col-sm-6">
+		<h1>Content</h1>
+		{{#each item in controller}}
+			<div>{{item.id}} [<span >Add</span>]</div>
+		{{/each}}
+	</div>
+	<div class="col-sm-6">
+		<h1>Selected</h1>
+		{{#each item in controller.selected}}
+			<div>{{item.id}} [<span >Remove</span>]</div>
+		{{/each}}
+	</div>
+</div>
+
 {{outlet}}

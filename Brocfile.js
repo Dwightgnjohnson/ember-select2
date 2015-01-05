@@ -17,4 +17,18 @@ var app = new EmberApp();
 // please specify an object with the list of modules as keys
 // along with the exports of each module as its value.
 
-module.exports = app.toTree();
+var pickFiles = require('broccoli-static-compiler');
+var mergeTrees = require('broccoli-merge-trees');
+app.import('bower_components/select2/select2.js');
+app.import('bower_components/select2/select2.css');
+
+var select2Imgs = pickFiles('bower_components/select2', {
+  srcDir: '/',
+  files: ['select2.png', 'select2x2.png', 'select2-spinner.gif'],
+  destDir: '/assets'
+});
+
+app.import('bower_components/bootstrap/dist/css/bootstrap.min.css');
+app.import('bower_components/select2-bootstrap/select2-bootstrap.css');
+
+module.exports = mergeTrees([app.toTree(), select2Imgs]);
