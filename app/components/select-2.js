@@ -50,6 +50,10 @@ export default Ember.Component.extend({
 			self.get('selected').pushObject(e.choice);
 		});
 
+		self._select.on("select2-removed", function(e) {
+			self.get('selected').removeObject(e.choice);
+		});
+
 	},
 
 	formatItemForSelect2: function(item) {
@@ -60,6 +64,17 @@ export default Ember.Component.extend({
 		var text = Ember.get(item, "id");
 
 		return Ember.Handlebars.Utils.escapeExpression(text);
-	}
+	},
+
+	selectedObserver: function() {
+		var self = this;
+
+		//runlater so that we don't have duplicate selections
+		Ember.run.later(function() {
+			self._select.select2("data", self.get('selected'));
+		});
+
+	}.observes('selected.length')
+
 });
 
